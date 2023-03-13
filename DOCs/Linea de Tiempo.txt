@@ -1,5 +1,8 @@
 Fecha estimada para la terminación de artefactos
 
+100%• 13/03/2023 - Documento de fundamentos del proyecto y diagramas básicos.
+	• 17/03/2023 - Diseño del protocolo de buffer serial Arduino Java.
+	• 18/03/2023 - Diseño de mapa de puertos arduinos sensores.
     • 20/03/2023 - Configuración y armado de placa protoboard con Arduino, 8 sensores, cableado y fuente extra de alimentación
     • 27/03/2023 - Desarrollo de programa para Arduino que registre y envié por comunicación serial el estado de los sensores.
     • 03/04/2023 - Desarrollo de Back-End Java que escuche la señal serial enviada por Arduino y almacene datos en una Base de Datos MariaDB.

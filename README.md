@@ -8,3 +8,7 @@ Folders
 
 DOCs: Documentos del proyecto.
 
+Arduino_Code: Artefacto de Arduino
+
+Java_Code: Artefacto de Java Backend
+
