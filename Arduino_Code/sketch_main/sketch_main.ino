@@ -6,7 +6,7 @@
 DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
 
 /*
- *  Diseño del Buffer serial a Java version 1
+ *  Diseño del Buffer serial Arduino a Java version 1
  *  
  *  v1  v2  v3  v4  v5  v6  v7  v8  v9  v10
  *  
@@ -20,12 +20,15 @@ DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
  *  
  *  v5: medición de sensor MQ-7, rango 0 - 1023
  *  
- *  v6: medición de sensor BigSound KY-037, rango 0 - 1       0 bajo el umbral de activación    1 arriba del umbral de activación
+ *  v6: medición de sensor BigSound KY-037,   rango 0 - 1       0 bajo el umbral de activación    1 arriba del umbral de activación
  *  
- *  v7: medición de sensor Flame KY-026,    rango 0 - 1       0 bajo el umbral de activación    1 arriba del umbral de activación
+ *  v7: medición de sensor Flame KY-026,      rango 0 - 1       0 bajo el umbral de activación    1 arriba del umbral de activación
  *  
- *  v8: medicion de sensor Luz KY-018,      rango 0 - 1       0 bajo el umbral de activación    1 arriba del umbral de activación
+ *  v8: medición de sensor Luz KY-018,        rango 0 - 1       0 bajo el umbral de activación    1 arriba del umbral de activación
  *  
+ *  v9: medición de sensor Obstáculos KY-032, rango 0 - 1       0 bajo el umbral de activación    1 arriba del umbral de activación
+ *  
+ *  v10:medición de inclinación KY-017,       rango 0 - 1       0 bajo el umbral de activación    1 arriba del umbral de activación
  *  
  */
 
@@ -51,7 +54,11 @@ void loop() {
 
   leerSensorFlameKY026();             // v7
 
-  leerSensorLuzK018();                // v8                  
+  leerSensorLuzKY018();               // v8   
+
+  leerSensorAvoidKY032();             // v9
+
+  
 
   delay(2000);
 
@@ -91,6 +98,10 @@ void leerSensorFlameKY026(){            // v7
   Serial.println(0);
 }
 
-void leerSensorLuzK018(){               // v8
+void leerSensorLuzKY018(){              // v8
+  Serial.println(0);
+}
+
+void leerSensorAvoidKY032(){            // v9
   Serial.println(0);
 }
