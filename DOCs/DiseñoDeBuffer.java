@@ -17,10 +17,10 @@
  *  
  *  v7: medición de sensor Flame KY-026,    	rango 0 - 1       	0 bajo el umbral de activación    1 arriba del umbral de activación
  *  
- *  v8: medición de sensor Luz KY-018,      	rango 0 - 1       	0 bajo el umbral de activación    1 arriba del umbral de activación
+ *  v8: medición de sensor Luz KY-018,      	rango 0 - 1023
  *  
  *  v9: medición de sensor Obstáculos KY-032, 	rango 0 - 1			0 bajo el umbral de activación    1 arriba del umbral de activación
  *  
- *  v10:medición de inclinación KY-017,     	rango 0 - 1       	0 bajo el umbral de activación    1 arriba del umbral de activación
+ *  v10:medición de Inclinación KY-017,     	rango 0 - 1       	0 bajo el umbral de activación    1 arriba del umbral de activación
  *  
  */
