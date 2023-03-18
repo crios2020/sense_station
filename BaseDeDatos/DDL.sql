@@ -41,3 +41,7 @@ create table registros(
     obstaculo bool,
     inclinado bool
 );
+select * from registros;
+select temperatura from registros where fecha = curdate();
+select fecha from registros;
+select curdate();

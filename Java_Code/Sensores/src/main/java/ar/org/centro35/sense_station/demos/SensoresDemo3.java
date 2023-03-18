@@ -1,4 +1,4 @@
-package ar.org.centro35.Sensores;
+package ar.org.centro35.sense_station.demos;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;

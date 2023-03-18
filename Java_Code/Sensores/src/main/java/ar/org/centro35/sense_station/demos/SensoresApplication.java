@@ -1,4 +1,4 @@
-package ar.org.centro35.Sensores;
+package ar.org.centro35.sense_station.demos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -23,6 +23,12 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.1.2</version>
+		</dependency>
 		<dependency>
 			<groupId>com.github.PanamaHitek</groupId>
 			<artifactId>PanamaHitek_Arduino</artifactId>
