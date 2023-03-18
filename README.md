@@ -12,3 +12,5 @@ Arduino_Code: Artefacto de Arduino
 
 Java_Code: Artefacto de Java Backend
 
+BaseDeDatos: DDL SQL para MariaDB o MySQL
+
