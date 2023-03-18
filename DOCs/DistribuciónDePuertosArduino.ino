@@ -28,9 +28,9 @@
   * 
   * 11-
   * 
-  * 12-
+  * 12-	  Led Verde
   * 
-  * 13-
+  * 13-	  Led Rojo
   * 
   * 
   * Puertas Analógicos

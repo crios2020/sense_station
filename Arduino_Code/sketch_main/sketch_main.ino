@@ -6,6 +6,16 @@
 DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
 
 /*
+   Esquema de colores de cable en protoboard para todos los sensores
+
+      Rojo:   + VCC
+      Azul:   - GND
+      Verde:  Señal Analogica o Digital
+
+   Nota: el led de estado tiene esquema de colores propio segun color de led
+*/
+
+/*
     Diseño del Buffer serial Arduino a Java version 1
 
     v1  v2  v3  v4  v5  v6  v7  v8  v9  v10
@@ -62,9 +72,9 @@ DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
 
    11-
 
-   12-
+   12-  Led Verde
 
-   13-
+   13-  Led Rojo
 
 
    Puertas Analógicos
@@ -83,14 +93,19 @@ DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
 
 */
 
+//CONSTANTES
+const int TIEMPOCALENTAMIENTO = 20000;       //Tiempo inicial de calentamiento en ms
+const int DELAY = 5000;                   //Tiempo de delay en loop
+
 //DIGITALES
 const int BIGSOUND = 3;         //Mic KY-037 Digital
 const int FLAME = 4;            //Flame KY-026 Sensor Digital
 const int AVOID = 5;            //Obstáculos KY-032 Sensor Digital
 const int INCLINACION = 6;      //Light Cup KY-017 Sensor Digital
+const int LEDROJO = 13;         //Led de estado Rojo
+const int LEDVERDE = 12;        //Led de estado Verde
 
 //ANALÓGICOS
-
 const int MQ5 = 0;              //MQ5 Sensor Analógico
 const int MQ7 = 1;              //MQ7 Sensor Analógico
 const int LUZ = 2;              //PhotoResistor KY-018 Sensor Analógico
@@ -98,6 +113,8 @@ const int LUZ = 2;              //PhotoResistor KY-018 Sensor Analógico
 void setup() {
   dht.begin();
   Serial.begin(9600);
+  pinMode(LEDROJO, OUTPUT);
+  pinMode(LEDVERDE, OUTPUT);
   calentarSensores();
 }
 
@@ -121,15 +138,25 @@ void loop() {
 
   leerSensorAvoidKY032();             // v9
 
+  leerSensorLightCupKY017();          //v10
 
+  delay(DELAY);
 
-  delay(2000);
+  //digitalWrite(LEDROJO,HIGH);
+  //delay(2000);
+  //digitalWrite(LEDROJO,LOW);
+  //delay(2000);
+
 
 }
 
 void calentarSensores() {
+  digitalWrite(LEDROJO, HIGH);
+  digitalWrite(LEDVERDE, LOW);
   //Algunos de los sensores necesitan 60s para calentarse y poder medir correctamente (MQ-5, MQ-7)
-  delay(60000);
+  delay(TIEMPOCALENTAMIENTO);
+  digitalWrite(LEDROJO, LOW);
+  digitalWrite(LEDVERDE, HIGH);
 }
 void version() {                              // v1
   Serial.println(1);
@@ -178,6 +205,14 @@ void leerSensorLuzKY018() {                   // v8
 
 void leerSensorAvoidKY032() {                 // v9
   if (digitalRead(AVOID) == HIGH) {
+    Serial.println(1);
+  } else {
+    Serial.println(0);
+  }
+}
+
+void leerSensorLightCupKY017() {
+  if (digitalRead(INCLINACION) == HIGH) {
     Serial.println(1);
   } else {
     Serial.println(0);
