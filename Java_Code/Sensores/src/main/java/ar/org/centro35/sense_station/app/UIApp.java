@@ -187,11 +187,20 @@ public class UIApp extends javax.swing.JFrame {
                     }
                 } catch (ArduinoException | SerialPortException e) {
                     System.out.println(e);
+                    lblInfo.setText("Fallo de conexión!");
+                    lblInfo.setForeground(Color.RED);
                 }
             });
         } catch (ArduinoException | SerialPortException e) {
             System.out.println(e);
+            lblInfo.setText("Fallo de conexión!");
+            lblInfo.setForeground(Color.RED);
+        } catch (Exception e) {
+            System.out.println(e);
+            lblInfo.setText("Error de sensores!");
+            lblInfo.setForeground(Color.RED);
         }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -225,7 +234,7 @@ public class UIApp extends javax.swing.JFrame {
         lblInfo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Estación de Sensado");
+        setTitle("https://github.com/crios2020/sense_station");
         setBackground(new java.awt.Color(204, 204, 204));
         setResizable(false);
 
