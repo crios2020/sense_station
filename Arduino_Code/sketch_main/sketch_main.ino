@@ -94,8 +94,8 @@ DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
 */
 
 //CONSTANTES
-const int TIEMPOCALENTAMIENTO = 20000;       //Tiempo inicial de calentamiento en ms
-const int DELAY = 5000;                   //Tiempo de delay en loop
+const int TIEMPOCALENTAMIENTO = 10000;       //Tiempo inicial de calentamiento en ms
+const int DELAY = 2500;                   //Tiempo de delay en loop
 
 //DIGITALES
 const int BIGSOUND = 3;         //Mic KY-037 Digital
@@ -199,12 +199,12 @@ void leerSensorFlameKY026() {                 // v7
 }
 
 void leerSensorLuzKY018() {                   // v8
-  int luz = analogRead(LUZ);
+  int luz = 1023 - analogRead(LUZ);
   Serial.println(luz);
 }
 
 void leerSensorAvoidKY032() {                 // v9
-  if (digitalRead(AVOID) == HIGH) {
+  if (digitalRead(AVOID) == LOW) {
     Serial.println(1);
   } else {
     Serial.println(0);
@@ -212,7 +212,7 @@ void leerSensorAvoidKY032() {                 // v9
 }
 
 void leerSensorLightCupKY017() {
-  if (digitalRead(INCLINACION) == HIGH) {
+  if (digitalRead(INCLINACION) == HIGH) {   // v10
     Serial.println(1);
   } else {
     Serial.println(0);

@@ -18,6 +18,8 @@ public class SensoresDemo3 extends javax.swing.JFrame {
     private JTextField txtTemp;
     private JLabel lblHum;
     private JTextField txtHum;
+    private JLabel lblLuz;
+    private JTextField txtLuz;
 
     public SensoresDemo3() {
         initComponents();
@@ -29,15 +31,16 @@ public class SensoresDemo3 extends javax.swing.JFrame {
         PanamaHitek_Arduino ino = new PanamaHitek_Arduino();
 
         // Se crea un buffer para la clasificación de mensajes
-        PanamaHitek_MultiMessage multi = new PanamaHitek_MultiMessage(2, ino);
+        PanamaHitek_MultiMessage multi = new PanamaHitek_MultiMessage(10, ino);
         try {
             ino.arduinoRX("/dev/ttyUSB0", 9600, (SerialPortEvent serialPortEvent) -> {
                 try {
                     if (multi.dataReceptionCompleted()) {
                         // System.out.println(multi.getMessage(0));
                         // System.out.println(multi.getMessage(1));
-                        txtTemp.setText(multi.getMessage(0));
-                        txtHum.setText(multi.getMessage(1));
+                        txtTemp.setText(multi.getMessage(1));
+                        txtHum.setText(multi.getMessage(2));
+                        txtLuz.setText(multi.getMessage(7));
                         multi.flushBuffer();
                     }
                 } catch (ArduinoException | SerialPortException e) {
@@ -75,6 +78,15 @@ public class SensoresDemo3 extends javax.swing.JFrame {
         txtHum.setEditable(false);
         txtHum.setText("100.0");
         panel.add(txtHum);
+
+        // Luz
+        lblLuz = new JLabel();
+        lblLuz.setText("Humedad: ");
+        panel.add(lblLuz);
+        txtLuz = new JTextField();
+        txtLuz.setEditable(false);
+        txtLuz.setText("100.0");
+        panel.add(txtLuz);
 
     }
 
