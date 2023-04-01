@@ -44,7 +44,7 @@ DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
 
 /*
 
-   Configuración de puertos de placa Arduino UNO
+   Configuración de puertos de placa Arduino UNO / NANO
 
    Puertas Digitales
 

@@ -1,6 +1,6 @@
  /*
   * 
-  * Configuración de puertos de placa Arduino UNO
+  * Configuración de puertos de placa Arduino UNO / Nano
   * 
   * Puertas Digitales
   * 
