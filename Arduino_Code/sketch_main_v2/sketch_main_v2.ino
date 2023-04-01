@@ -2,8 +2,15 @@
 
 //Configuración del sensor DHT
 #define DHTPIN 2                          //Sensor DHT en port Digital 2  
-#define DHTTYPE DHT11                     //Sensor Instalado DHT11
+#define DHTTYPE DHT22                     //Sensor Instalado DHT22
 DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
+
+/*
+ * ************************************************************************************
+ *      Versión 2 Lite
+ * ************************************************************************************
+ */
+
 
 /*
    Esquema de colores de cable en protoboard para todos los sensores
@@ -94,7 +101,9 @@ DHT dht(DHTPIN, DHTTYPE);                 //Se crea un objeto del tipo DHT
 */
 
 //CONSTANTES
-const int TIEMPOCALENTAMIENTO = 10000;       //Tiempo inicial de calentamiento en ms
+const int TIEMPOCALENTAMIENTO = 2000;       //Tiempo inicial de calentamiento en ms
+                                            //En la versión Lite se bajo el tiempo de calentamiento, 
+                                            //dado que no hay sensores que requieran calentamiento
 const int DELAY = 2500;                   //Tiempo de delay en loop
 
 //DIGITALES
@@ -122,7 +131,8 @@ void loop() {
 
   version();                          // v1
 
-  leerTemperaturaDHT11();             // v2
+  //leerTemperaturaDHT11();             // v2
+  leerTemperaturaDHT22();             // v2
 
   leerHumedadDHT11();                 // v3
 
@@ -159,10 +169,15 @@ void calentarSensores() {
   digitalWrite(LEDVERDE, HIGH);
 }
 void version() {                              // v1
-  Serial.println(1);
+  Serial.println(2);
 }
 
 void leerTemperaturaDHT11() {                 // v2
+  float temperatura = dht.readTemperature();
+  Serial.println(temperatura);
+}
+
+void leerTemperaturaDHT22() {                 // v2
   float temperatura = dht.readTemperature();
   Serial.println(temperatura);
 }
