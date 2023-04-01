@@ -1,13 +1,13 @@
 /*
- *  Diseño del Buffer serial Arduino a Java version 1
+ *  Diseño del Buffer serial Arduino a Java version 1 Adaptado para DHT 11
  *  
  *  v1  v2  v3  v4  v5  v6  v7  v8  v9  v10
  *  
  *  v1: versión del buffer, rango 1 - 100, La idea es que el receptor del buffer pueda identificar la versión correctamente.
  *  
- *  v2: medición de temperatura, rango 0 - 50, para el sensor DHT-11
+ *  v2: medición de temperatura, rango 0 - 50, para el sensor DHT-11 en grados centigrados
  * 
- *  v3: medición de humedad, rango 10 - 90, para el sensor DHT-11
+ *  v3: medición de humedad, rango 10 - 90, para el sensor DHT-11 en %
  *  
  *  v4: medición de sensor MQ-5, rango 0 - 1023
  *  

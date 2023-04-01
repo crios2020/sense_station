@@ -8,7 +8,7 @@
   * 
   * 1 -   TX
   * 
-  * 2 -   DHT 11
+  * 2 -   DHT11 o DHT22
   * 
   * 3 -   BigSound KY-037
   * 
