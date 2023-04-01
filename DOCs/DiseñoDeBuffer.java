@@ -7,7 +7,7 @@
  *  
  *  v2: medición de temperatura, rango 0 - 50, para el sensor DHT-11
  * 
- *  v3: medición de temperatura, rango 10 - 90, para el sensor DHT-11
+ *  v3: medición de humedad, rango 10 - 90, para el sensor DHT-11
  *  
  *  v4: medición de sensor MQ-5, rango 0 - 1023
  *  
