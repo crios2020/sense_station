@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -19,13 +20,13 @@
         <form>
             <div class="row row-cols-2 bg-primary-subtle contenedor1">
                 <div class="col">
-                    <select class="form-select" aria-label="Default select example">
-                        <option value="1" selected>Seleccione una opción de consulta!</option>
-                        <option value="1">Ultima Medición</option>
-                        <option value="2">Valores promedio de la hora actual</option>
-                        <option value="3">Valores promedio del día actual</option>
-                        <option value="4">Valores promedio del mes actual</option>
-                        <option value="5">Valores promedio del año actual</option>
+                    <select class="form-select" aria-label="Default select example" name="query">
+                        <option value="ultima" selected>Seleccione una opción de consulta!</option>
+                        <option value="ultima">Ultima Medición</option>
+                        <option value="hora">Valores promedio de la hora actual</option>
+                        <option value="dia">Valores promedio del día actual</option>
+                        <option value="mes">Valores promedio del mes actual</option>
+                        <option value="anio">Valores promedio del año actual</option>
                     </select>
                 </div>
                 <div class="col">
@@ -37,7 +38,7 @@
                     <div class="mb-3 row">
                         <label for="fecha" class="col-sm-2 col-form-label">Fecha: </label>
                         <div class="col-sm-10">
-                            <input id="fecha" class="form-control" type="text" value="" aria-label="" disabled readonly>
+                            <input id="fecha" class="form-control" type="text" th:value="${fecha}" aria-label="" disabled readonly>
                         </div>
                       </div>
                 </div>
@@ -45,7 +46,7 @@
                     <div class="mb-3 row">
                         <label for="hora" class="col-sm-2 col-form-label">Hora: </label>
                         <div class="col-sm-10">
-                            <input id="hora" class="form-control" type="text" value="" aria-label="" disabled readonly>
+                            <input id="hora" class="form-control" type="text" th:value="${hora}" aria-label="" disabled readonly>
                         </div>
                       </div>
                 </div>
@@ -53,7 +54,7 @@
                     <div class="mb-3 row">
                         <label for="temperatura" class="col-sm-2 col-form-label">Temperatura: </label>
                         <div class="col-sm-10">
-                            <input id="temperatura" class="form-control" type="text" value="" aria-label="" disabled readonly>
+                            <input id="temperatura" class="form-control" type="text" th:value="${temperatura}+ ' C'" aria-label="" disabled readonly>
                         </div>
                       </div>
                 </div>
@@ -61,7 +62,7 @@
                     <div class="mb-3 row">
                         <label for="humedad" class="col-sm-2 col-form-label">Humedad: </label>
                         <div class="col-sm-10">
-                            <input id="humedad" class="form-control" type="text" value="" aria-label="" disabled readonly>
+                            <input id="humedad" class="form-control" type="text" th:value="${humedad}+ ' %'" aria-label="" disabled readonly>
                         </div>
                       </div>
                 </div>
@@ -69,7 +70,7 @@
                     <div class="mb-3 row">
                         <label for="gas" class="col-sm-2 col-form-label">Gases Peligrosos: </label>
                         <div class="col-sm-10">
-                            <input id="gas" class="form-control" type="text" value="" aria-label="" disabled readonly>
+                            <input id="gas" class="form-control" type="text" th:value="${gases}+' - '+${estadoGases}" aria-label="" disabled readonly>
                         </div>
                       </div>
                 </div>
@@ -77,7 +78,7 @@
                     <div class="mb-3 row">
                         <label for="luz" class="col-sm-2 col-form-label">Iluminación: </label>
                         <div class="col-sm-10">
-                            <input id="luz" class="form-control" type="text" value="" aria-label="" disabled readonly>
+                            <input id="luz" class="form-control" type="text" th:value="${luz}+' - '+${estadoLuz}" aria-label="" disabled readonly>
                         </div>
                       </div>
                 </div>

@@ -11,7 +11,7 @@ Fecha estimada para la terminación de artefactos
 100%• 10/04/2023 - Desarrollo de Front-End Java Swing que lea la BD y presente valores actuales y estadísticos
     • 10/04/2023 - Placa experimental Arduino Nano
     • 17/04/2023 - Configuración equipo Netbook (Formateo instalación)
-    • 24/04/2023 - Desarrollo de un Front-End web responsivo (PHP o Spring Thymeleaf u otro) que permita presentar valores actuales y estadísticos en cualquier dispositivo.
+ 90%• 24/04/2023 - Desarrollo de un Front-End web responsivo (PHP o Spring Thymeleaf u otro) que permita presentar valores actuales y estadísticos en cualquier dispositivo.
     • 01/05/2023 - Configuración router wifi
     • 08/05/2023 - Prueba total de presentación
     
