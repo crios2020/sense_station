@@ -81,7 +81,7 @@ public class UIAPPLite extends javax.swing.JFrame {
                                     (int) Double.parseDouble(multi.getMessage(4)),
                                     (multi.getMessage(5).equals("0") ? false : true),
                                     (multi.getMessage(6).equals("0") ? false : true),
-                                    Integer.parseInt(multi.getMessage(7)),
+                                    (int) Double.parseDouble(multi.getMessage(7)),
                                     (multi.getMessage(8).equals("0") ? false : true),
                                     (multi.getMessage(9).equals("0") ? false : true));
     
