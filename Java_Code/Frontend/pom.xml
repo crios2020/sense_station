@@ -11,8 +11,8 @@
 	<groupId>ar.org.centro35.web</groupId>
 	<artifactId>fronend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fronend</name>
-	<description>Demo project for Spring Boot</description>
+	<name>frontend</name>
+	<description>Frontend app for SenseStation</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
