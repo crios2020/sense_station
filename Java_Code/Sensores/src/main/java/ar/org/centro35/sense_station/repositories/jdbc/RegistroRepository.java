@@ -68,6 +68,34 @@ public class RegistroRepository implements I_RegistroRepository {
     }
 
     @Override
+    public Registro getAvgHour() {
+        Registro registro = new Registro();
+        String sql=
+            "select fecha,hora,avg(temperatura) temperatura, avg(humedad) humedad, "+
+                "avg(mq5) mq5, avg(mq7) mq7, avg(luz) luz  from registros where fecha = curdate() "+
+                "and hour(hora) = hour(curtime())";;
+        try (ResultSet rs=conn.createStatement().executeQuery(sql)){
+            if(rs.next()){
+                registro.setId(0);
+                registro.setFecha(rs.getString("fecha"));
+                registro.setHora(rs.getString("hora"));
+                registro.setTemperatura(rs.getInt("temperatura"));
+                registro.setHumedad(rs.getInt("humedad"));
+                registro.setMq5(rs.getInt("mq5"));
+                registro.setMq7(rs.getInt("mq7"));
+                registro.setBigsound(false);
+                registro.setFlame(false);
+                registro.setLuz(rs.getInt("luz"));
+                registro.setObstaculo(false);
+                registro.setInclinado(false);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return registro;
+    }
+
+    @Override
     public Registro getAvgDay() {
         Registro registro = new Registro();
         String sql=

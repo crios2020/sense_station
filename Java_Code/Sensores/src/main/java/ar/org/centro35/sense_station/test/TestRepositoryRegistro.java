@@ -13,9 +13,9 @@ public class TestRepositoryRegistro {
         I_RegistroRepository rr=new RegistroRepository(Connector.getConnection());
 
         Registro registro=new Registro(
-            //"2023/03/18",
+            //"2023/04/02",
             LocalDate.now().toString(), 
-            //"19:23", 
+            //"15:10", 
             LocalTime.now().toString(),
             50, 
             63, 
@@ -33,6 +33,9 @@ public class TestRepositoryRegistro {
 
         System.out.println("***************************************");
         System.out.println(rr.getLast());
+
+        // System.out.println("***************************************");
+        // System.out.println(rr.getAvgHour());
 
         // System.out.println("***************************************");
         // System.out.println(rr.getAvgDay());
