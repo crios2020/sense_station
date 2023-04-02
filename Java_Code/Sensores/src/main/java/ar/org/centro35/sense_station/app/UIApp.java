@@ -5,6 +5,7 @@ import com.panamahitek.PanamaHitek_Arduino;
 import com.panamahitek.PanamaHitek_MultiMessage;
 
 import ar.org.centro35.sense_station.entities.Registro;
+import ar.org.centro35.sense_station.threads.HoraThread;
 
 import java.awt.Color;
 import java.time.LocalDate;
@@ -17,16 +18,16 @@ public class UIApp extends javax.swing.JFrame {
 
     public UIApp() {
         initComponents();
-        
+
         iniciarComponentes();
     }
-    
-    private void iniciarComponentes(){
-        
-        //inicializador de fecha y hora
-        new Thread(new HoraThread(txtFecha,txtHora)).start();
 
-        //Lector de buffer de Arduino
+    private void iniciarComponentes() {
+
+        // inicializador de fecha y hora
+        new Thread(new HoraThread(txtFecha, txtHora)).start();
+
+        // Lector de buffer de Arduino
 
         // Objeto para la conexión con Arduino
         PanamaHitek_Arduino ino = new PanamaHitek_Arduino();
@@ -39,150 +40,149 @@ public class UIApp extends javax.swing.JFrame {
             ino.arduinoRX("/dev/ttyUSB0", 9600, (SerialPortEvent serialPortEvent) -> {
                 try {
                     if (multi.dataReceptionCompleted()) {
-                        //System.out.println("Recibiendo nuevoBuffer de Arduino");
+                        // System.out.println("Recibiendo nuevoBuffer de Arduino");
 
-                        Registro registro=new Registro(
-                            LocalDate.now().toString(), 
-                            LocalTime.now().toString(),
-                            (int)Double.parseDouble(multi.getMessage(1)), 
-                            (int)Double.parseDouble(multi.getMessage(2)),
-                            Integer.parseInt(multi.getMessage(3)),
-                            Integer.parseInt(multi.getMessage(4)), 
-                            (multi.getMessage(5).equals("0")?false:true), 
-                            (multi.getMessage(6).equals("0")?false:true),  
-                            Integer.parseInt(multi.getMessage(7)),
-                            (multi.getMessage(8).equals("0")?false:true),
-                            (multi.getMessage(9).equals("0")?false:true)
-                        );
+                        Registro registro = new Registro(
+                                LocalDate.now().toString(),
+                                LocalTime.now().toString(),
+                                (int) Double.parseDouble(multi.getMessage(1)),
+                                (int) Double.parseDouble(multi.getMessage(2)),
+                                Integer.parseInt(multi.getMessage(3)),
+                                Integer.parseInt(multi.getMessage(4)),
+                                (multi.getMessage(5).equals("0") ? false : true),
+                                (multi.getMessage(6).equals("0") ? false : true),
+                                Integer.parseInt(multi.getMessage(7)),
+                                (multi.getMessage(8).equals("0") ? false : true),
+                                (multi.getMessage(9).equals("0") ? false : true));
 
                         lblInfo.setText("Estación Activa!");
                         lblInfo.setForeground(Color.BLUE);
 
-                        //Protocolo
+                        // Protocolo
                         txtProto.setText(multi.getMessage(0));
 
-                        //Temperatura
-                        txtTemp.setText(registro.getTemperatura()+" C");
-                        int temp=registro.getTemperatura();
-                        if(temp<10){
+                        // Temperatura
+                        txtTemp.setText(registro.getTemperatura() + " C");
+                        int temp = registro.getTemperatura();
+                        if (temp < 10) {
                             txtTemp.setForeground(Color.white);
                             txtTemp.setBackground(Color.blue);
                         }
-                        if(temp>=10 && temp<20){
+                        if (temp >= 10 && temp < 20) {
                             txtTemp.setForeground(Color.black);
                             txtTemp.setBackground(Color.lightGray);
                         }
-                        if(temp>=20 && temp<30){
+                        if (temp >= 20 && temp < 30) {
                             txtTemp.setForeground(Color.black);
                             txtTemp.setBackground(Color.cyan);
                         }
-                        if(temp>=30 && temp<40){
+                        if (temp >= 30 && temp < 40) {
                             txtTemp.setForeground(Color.white);
                             txtTemp.setBackground(Color.orange);
                         }
-                        if(temp>=40){
+                        if (temp >= 40) {
                             txtTemp.setForeground(Color.white);
                             txtTemp.setBackground(Color.red);
                         }
 
-                        //Humedad
-                        txtHum.setText(registro.getHumedad()+" %");
+                        // Humedad
+                        txtHum.setText(registro.getHumedad() + " %");
 
-                        //MQ5
-                        int mq5=registro.getMq5();
-                        if(mq5>=250){
-                            txtMQ5.setText(registro.getMq5()+"");
+                        // MQ5
+                        int mq5 = registro.getMq5();
+                        if (mq5 >= 250) {
+                            txtMQ5.setText(registro.getMq5() + "");
                             txtMQ5.setForeground(Color.WHITE);
                             txtMQ5.setBackground(Color.RED);
-                        }else{
-                            txtMQ5.setText(registro.getMq5()+"");
+                        } else {
+                            txtMQ5.setText(registro.getMq5() + "");
                             txtMQ5.setForeground(Color.BLUE);
                             txtMQ5.setBackground(Color.GREEN);
                         }
 
-                        //MQ7
-                        int mq7=registro.getMq7();
-                        if(mq7>=200){
-                            txtMQ7.setText(registro.getMq7()+"");
+                        // MQ7
+                        int mq7 = registro.getMq7();
+                        if (mq7 >= 200) {
+                            txtMQ7.setText(registro.getMq7() + "");
                             txtMQ7.setForeground(Color.WHITE);
                             txtMQ7.setBackground(Color.RED);
-                        }else{
-                            txtMQ7.setText(registro.getMq7()+"");
+                        } else {
+                            txtMQ7.setText(registro.getMq7() + "");
                             txtMQ7.setForeground(Color.BLUE);
                             txtMQ7.setBackground(Color.GREEN);
                         }
 
-                        //BigSound
-                        boolean ruido=registro.isBigsound();
-                        if(ruido){
+                        // BigSound
+                        boolean ruido = registro.isBigsound();
+                        if (ruido) {
                             txtRuido.setText("Sonido Fuerte!!!");
                             txtRuido.setForeground(Color.WHITE);
                             txtRuido.setBackground(Color.RED);
-                        }else{
+                        } else {
                             txtRuido.setText("Normal");
                             txtRuido.setForeground(Color.BLUE);
                             txtRuido.setBackground(Color.GREEN);
                         }
 
-                        //Llama
-                        boolean llama=registro.isFlame();
-                        if(llama){
+                        // Llama
+                        boolean llama = registro.isFlame();
+                        if (llama) {
                             txtLlama.setText("Llama detectada!!!");
                             txtLlama.setForeground(Color.WHITE);
                             txtLlama.setBackground(Color.RED);
-                        }else{
+                        } else {
                             txtLlama.setText("Normal");
                             txtLlama.setForeground(Color.BLUE);
                             txtLlama.setBackground(Color.GREEN);
                         }
 
-                        //Luz
-                        int luz=registro.getLuz();
-                        if(luz<200){
-                            txtLuz.setText(registro.getLuz()+": Ambiente muy oscuro");
+                        // Luz
+                        int luz = registro.getLuz();
+                        if (luz < 200) {
+                            txtLuz.setText(registro.getLuz() + ": Ambiente muy oscuro");
                             txtLuz.setForeground(Color.WHITE);
                             txtLuz.setBackground(Color.black);
                         }
-                        if(luz>=200 && luz<400){
-                            txtLuz.setText(registro.getLuz()+": Ambiente oscuro");
+                        if (luz >= 200 && luz < 400) {
+                            txtLuz.setText(registro.getLuz() + ": Ambiente oscuro");
                             txtLuz.setForeground(Color.WHITE);
                             txtLuz.setBackground(Color.gray);
                         }
-                        if(luz>=400 && luz<600){
-                            txtLuz.setText(registro.getLuz()+": Ambiente luminoso");
+                        if (luz >= 400 && luz < 600) {
+                            txtLuz.setText(registro.getLuz() + ": Ambiente luminoso");
                             txtLuz.setForeground(Color.BLUE);
                             txtLuz.setBackground(Color.lightGray);
                         }
-                        if(luz>=600){
-                            txtLuz.setText(registro.getLuz()+": Ambiente muy luminoso");
+                        if (luz >= 600) {
+                            txtLuz.setText(registro.getLuz() + ": Ambiente muy luminoso");
                             txtLuz.setForeground(Color.BLUE);
                             txtLuz.setBackground(Color.white);
                         }
 
-                        //Proximidad
-                        boolean avoid=registro.isObstaculo();
-                        if(avoid){
+                        // Proximidad
+                        boolean avoid = registro.isObstaculo();
+                        if (avoid) {
                             txtAvoid.setText("Obstaculo!!!");
                             txtAvoid.setForeground(Color.WHITE);
                             txtAvoid.setBackground(Color.RED);
-                        }else{
+                        } else {
                             txtAvoid.setText("Normal");
                             txtAvoid.setForeground(Color.BLUE);
                             txtAvoid.setBackground(Color.GREEN);
                         }
 
-                        //Inclinación
-                        boolean inclinado=registro.isInclinado();
-                        if(inclinado){
+                        // Inclinación
+                        boolean inclinado = registro.isInclinado();
+                        if (inclinado) {
                             txtIncli.setText("Inclinado!!!");
                             txtIncli.setForeground(Color.WHITE);
                             txtIncli.setBackground(Color.RED);
-                        }else{
+                        } else {
                             txtIncli.setText("Normal");
                             txtIncli.setForeground(Color.BLUE);
                             txtIncli.setBackground(Color.GREEN);
                         }
-                        
+
                         multi.flushBuffer();
                     }
                 } catch (ArduinoException | SerialPortException e) {
@@ -204,7 +204,8 @@ public class UIApp extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -329,122 +330,195 @@ public class UIApp extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(328, 328, 328)
-                        .addComponent(lblInfo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(txtProto, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(txtTemp, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
-                                .addComponent(txtMQ5, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(txtRuido, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(txtLuz, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(152, 152, 152)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtIncli, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHum, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMQ7, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLlama, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAvoid, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(328, 328, 328)
+                                                .addComponent(lblInfo))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel1,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 147,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(29, 29, 29)
+                                                                .addComponent(txtFecha,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 207,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel3,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 147,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(29, 29, 29)
+                                                                .addComponent(txtProto,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 207,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel5,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 147,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(29, 29, 29)
+                                                                .addComponent(txtTemp,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 207,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel7,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 164,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(12, 12, 12)
+                                                                .addComponent(txtMQ5,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 207,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel9,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 147,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(29, 29, 29)
+                                                                .addComponent(txtRuido,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 207,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel11,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 147,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(29, 29, 29)
+                                                                .addComponent(txtLuz,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 207,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(152, 152, 152)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addGap(2, 2, 2)
+                                                                .addGroup(layout.createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(jLabel6,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                147,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(jLabel8)
+                                                                        .addComponent(jLabel10,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                147,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(jLabel12,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                147,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(jLabel4,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                                147,
+                                                                                javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addGap(37, 37, 37)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtIncli, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtHum, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtMQ7, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtLlama, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(txtAvoid, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                207, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addContainerGap(23, Short.MAX_VALUE)));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(lblInfo)
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel1))
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel3))
-                    .addComponent(txtProto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtIncli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTemp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtHum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel5)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtMQ5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtMQ7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8)))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtRuido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtLlama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel9)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtLuz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtAvoid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel12))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel11)))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lblInfo)
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(3, 3, 3)
+                                                .addComponent(jLabel1))
+                                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel2)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(3, 3, 3)
+                                                .addComponent(jLabel3))
+                                        .addComponent(txtProto, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(txtIncli, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel4)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtTemp, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(txtHum, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel6))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(3, 3, 3)
+                                                .addComponent(jLabel5)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtMQ5, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(3, 3, 3)
+                                                .addGroup(layout
+                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel7)
+                                                        .addGroup(layout
+                                                                .createParallelGroup(
+                                                                        javax.swing.GroupLayout.Alignment.BASELINE)
+                                                                .addComponent(txtMQ7,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(jLabel8)))))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtRuido, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(txtLlama, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel10))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(3, 3, 3)
+                                                .addComponent(jLabel9)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtLuz, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(txtAvoid, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel12))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(3, 3, 3)
+                                                .addComponent(jLabel11)))
+                                .addContainerGap(20, Short.MAX_VALUE)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -454,9 +528,13 @@ public class UIApp extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -474,7 +552,7 @@ public class UIApp extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(UIApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

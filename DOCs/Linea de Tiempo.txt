@@ -7,8 +7,8 @@ Fecha estimada para la terminación de artefactos
 100%• 27/03/2023 - Desarrollo de programa para Arduino que registre y envié por comunicación serial el estado de los sensores.
 100%• 03/04/2023 - Protocolo V2 de datos
 100%• 03/04/2023 - Protoboard Arduino Nano
- 50%• 03/04/2023 - Desarrollo de Back-End Java que escuche la señal serial enviada por Arduino y almacene datos en una Base de Datos MariaDB.
- 50%• 10/04/2023 - Desarrollo de Front-End Java Swing que lea la BD y presente valores actuales y estadísticos
+100%• 03/04/2023 - Desarrollo de Back-End Java que escuche la señal serial enviada por Arduino y almacene datos en una Base de Datos MariaDB.
+100%• 10/04/2023 - Desarrollo de Front-End Java Swing que lea la BD y presente valores actuales y estadísticos
     • 10/04/2023 - Placa experimental Arduino Nano
     • 17/04/2023 - Configuración equipo Netbook (Formateo instalación)
     • 24/04/2023 - Desarrollo de un Front-End web responsivo (PHP o Spring Thymeleaf u otro) que permita presentar valores actuales y estadísticos en cualquier dispositivo.
