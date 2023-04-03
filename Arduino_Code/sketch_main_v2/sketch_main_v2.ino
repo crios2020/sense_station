@@ -129,26 +129,26 @@ void setup() {
 
 void loop() {
 
-  version();                          // v1
+  //version();                          // v1
 
   //leerTemperaturaDHT11();             // v2
-  leerTemperaturaDHT22();             // v2
+  //leerTemperaturaDHT22();             // v2
 
-  leerHumedadDHT11();                 // v3
+  //leerHumedadDHT11();                 // v3
 
-  leerGasMQ5();                       // v4
+  //leerGasMQ5();                       // v4
 
   leerGasMQ7();                       // v5
 
-  leerBigSoundKY037();                // v6
+  //leerBigSoundKY037();                // v6
 
-  leerSensorFlameKY026();             // v7
+  //leerSensorFlameKY026();             // v7
 
-  leerSensorLuzKY018();               // v8
+  //leerSensorLuzKY018();               // v8
 
-  leerSensorAvoidKY032();             // v9
+  //leerSensorAvoidKY032();             // v9
 
-  leerSensorLightCupKY017();          //v10
+  //leerSensorLightCupKY017();          //v10
 
   delay(DELAY);
 
